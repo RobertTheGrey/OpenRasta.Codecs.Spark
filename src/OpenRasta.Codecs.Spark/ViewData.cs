@@ -1,0 +1,35 @@
+namespace OpenRasta.Codecs.Spark
+{
+    using System;
+
+    public class ViewData
+    {
+        private readonly object resource;
+
+        public ViewData(object resource)
+        {
+            this.resource = resource;
+        }
+
+        public object Eval(string expression)
+        {
+            if (Matches(expression, "Resource"))
+            {
+                return this.resource;
+            }
+
+            return null;
+        }
+
+        public string Eval(string expression, string format)
+        {
+            // not sure if this will be used;
+            return string.Format(format, this.Eval(expression));
+        }
+
+        private static bool Matches(string expression, string name)
+        {
+            return string.Equals(expression, name, StringComparison.CurrentCultureIgnoreCase);
+        }
+    }
+}
